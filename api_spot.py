@@ -164,3 +164,48 @@ def api_idq():
 
 
 app.run()
+
+"""
+spots = [
+    {
+        'id': 0,
+        'building_name': 'Yahoo Headquarters',
+        'point_of_contact': 'Rob Smith',
+        'building_type': 'Office',
+        'zipcode': 91234,
+        'address': '1234 Yahoo Avenue, San Francisco'
+    },
+    {
+        'id': 1,
+        'building_name': 'Marriott San Jose',
+        'point_of_contact': 'Jeffrey Dougie',
+        'building_type': 'Hotel',
+        'zipcode': 91492,
+        'address': '9876 Marriot Avenue, San Jose'
+    },
+    {
+        'id':2,
+        'building_name': 'Villagio Apartments',
+        'point_of_contact': 'Jennifer White',
+        'building_type': 'Apartment',
+        'zipcode': 91239,
+        'address': '1234 Villagio Avenue, San Jose'
+    }, 
+    {
+        'id':3,
+        'building_name': 'Rochester Apartments',
+        'point_of_contact': 'Tiffany Nguyen',
+        'building_type': 'Apartment',
+        'zipcode': 91239,
+        'address': '1234 Rochester Avenue, San Jose'
+    },
+    {
+        'id':4,
+        'building_name': 'Robinhood Main Office',
+        'point_of_contact': 'John Adams',
+        'building_type': 'Office',
+        'zipcode': 91223,
+        'address': '1234 Robinhood Avenue, San Francisco'
+    }
+]
+"""

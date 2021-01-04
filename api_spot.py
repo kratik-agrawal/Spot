@@ -26,7 +26,7 @@ def home():
 
 
 @app.route('/api/v1/locations/spots/all', methods=['GET'])
-def api_all():
+def api_all_spots():
     conn = sqlite3.connect('datav2.db')
     c = conn.cursor()
     c.row_factory = dict_factory
@@ -41,21 +41,21 @@ def api_all():
     return jsonify(c.execute("SELECT * FROM Spots").fetchall())
 """
 @app.route('/api/v1/locations/restaurants/all', methods=['GET'])
-def api_allR():
+def api_all_restaurants():
     conn = sqlite3.connect('datav2.db')
     c = conn.cursor()
     c.row_factory = dict_factory
     return jsonify(c.execute("SELECT * FROM Restaurants").fetchall())
 
 @app.route('/api/v1/locations/customers/all', methods=['GET'])
-def api_allC():
+def api_all_customers():
     conn = sqlite3.connect('datav2.db')
     c = conn.cursor()
     c.row_factory = dict_factory
     return jsonify(c.execute("SELECT * FROM Customers").fetchall())
 
 @app.route('/api/v1/orders/all', methods=['GET'])
-def api_allO():
+def api_all_orders():
     conn = sqlite3.connect('datav2.db')
     c = conn.cursor()
     c.row_factory = dict_factory
@@ -67,7 +67,7 @@ def page_not_found(e):
 
 
 @app.route('/api/v1/locations/restaurants', methods=['GET'])
-def api_id():
+def api_resturant_specific():
     
     query_parameters = request.args
     
@@ -102,12 +102,13 @@ def api_id():
     return jsonify(results)
 
 @app.route('/api/v1/locations/spots', methods=['GET'])
-def api_idh():
+def api_spots_specific():
     
     query_parameters = request.args
     
     spot_id = query_parameters.get('id')
     address = query_parameters.get('Address')
+    type = query_parameters.get('Type')
     
     query = "SELECT * FROM Spots WHERE"
     to_filter = []
@@ -118,12 +119,15 @@ def api_idh():
     if address:
         query+= ' Address=? AND'
         to_filter.append(address)
-    if not(address or spot_id):
+    if type:
+        query+= ' Type=? AND'
+        to_filter.append(type)
+    if not(address or spot_id or type):
         return page_not_found(404)
     
     query = query[:-4] + ';'
     
-    conn = sqlite3.connect('data.db')
+    conn = sqlite3.connect('datav2.db')
     conn.row_factory = dict_factory
     cur = conn.cursor()
     
@@ -132,7 +136,7 @@ def api_idh():
     return jsonify(results)
 
 @app.route('/api/v1/locations/customers', methods=['GET'])
-def api_idq():
+def api_id_specific():
     
     query_parameters = request.args
     

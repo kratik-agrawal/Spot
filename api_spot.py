@@ -27,24 +27,39 @@ def home():
 
 @app.route('/api/v1/locations/spots/all', methods=['GET'])
 def api_all():
-    conn = sqlite3.connect('data.db')
+    conn = sqlite3.connect('datav2.db')
     c = conn.cursor()
     c.row_factory = dict_factory
     return jsonify(c.execute("SELECT * FROM Spots").fetchall())
-
-@app.route('/api/v1/locations/restaurants/all', methods=['GET'])
-def api_allR():
-    conn = sqlite3.connect('data.db')
+"""
+Old version
+@app.route('/api/v1/locations/spots/all', methods=['GET'])
+def api_all():
+    conn = sqlite3.connect('datav2.db')
     c = conn.cursor()
     c.row_factory = dict_factory
-    return jsonify(c.execute("SELECT * FROM restaurants").fetchall())
+    return jsonify(c.execute("SELECT * FROM Spots").fetchall())
+"""
+@app.route('/api/v1/locations/restaurants/all', methods=['GET'])
+def api_allR():
+    conn = sqlite3.connect('datav2.db')
+    c = conn.cursor()
+    c.row_factory = dict_factory
+    return jsonify(c.execute("SELECT * FROM Restaurants").fetchall())
 
 @app.route('/api/v1/locations/customers/all', methods=['GET'])
 def api_allC():
-    conn = sqlite3.connect('data.db')
+    conn = sqlite3.connect('datav2.db')
     c = conn.cursor()
     c.row_factory = dict_factory
     return jsonify(c.execute("SELECT * FROM Customers").fetchall())
+
+@app.route('/api/v1/orders/all', methods=['GET'])
+def api_allO():
+    conn = sqlite3.connect('datav2.db')
+    c = conn.cursor()
+    c.row_factory = dict_factory
+    return jsonify(c.execute("SELECT * FROM Orders").fetchall())
 
 @app.errorhandler(404)
 def page_not_found(e):
@@ -60,7 +75,7 @@ def api_id():
     address = query_parameters.get('Address')
     phone= query_parameters.get('Phone')
     
-    query = "SELECT * FROM restaurants WHERE"
+    query = "SELECT * FROM Restaurants WHERE"
     to_filter = []
     
     if spot_id:
@@ -78,7 +93,7 @@ def api_id():
     
     query = query[:-4] + ';'
     
-    conn = sqlite3.connect('data.db')
+    conn = sqlite3.connect('datav2.db')
     conn.row_factory = dict_factory
     cur = conn.cursor()
     
@@ -144,7 +159,7 @@ def api_idq():
     
     query = query[:-4] + ';'
     
-    conn = sqlite3.connect('data.db')
+    conn = sqlite3.connect('datav2.db')
     conn.row_factory = dict_factory
     cur = conn.cursor()
     

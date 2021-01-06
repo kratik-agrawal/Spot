@@ -25,21 +25,24 @@ def home():
 
 
 
-@app.route('/api/v1/locations/spots/all', methods=['GET'])
+@app.route('/api/v1/locations/spots/all', methods=['GET','POST'])
 def api_all_spots():
-    conn = sqlite3.connect('datav2.db')
-    c = conn.cursor()
-    c.row_factory = dict_factory
-    return jsonify(c.execute("SELECT * FROM Spots").fetchall())
-"""
-Old version
-@app.route('/api/v1/locations/spots/all', methods=['GET'])
-def api_all():
-    conn = sqlite3.connect('datav2.db')
-    c = conn.cursor()
-    c.row_factory = dict_factory
-    return jsonify(c.execute("SELECT * FROM Spots").fetchall())
-"""
+    if(request.method=='GET'):
+        conn = sqlite3.connect('datav2.db')
+        c = conn.cursor()
+        c.row_factory = dict_factory
+        return jsonify(c.execute("SELECT * FROM Spots").fetchall())
+    
+    if(request.method=='POST'):
+        data = request.get_json()
+        print(data)
+        conn = sqlite3.connect('datav2.db')
+        c = conn.cursor()
+        print("INSERT INTO Spots(Address,`Building Name`,`Point of Contact`,Zipcode,Type) VALUES("+str(data['Address'])+","+str(data['Building'])+","+str(data['Contact'])+","+str(data['Zipcode'])+","+str(data['Type'])+")")
+        c.execute("INSERT INTO Spots(Address,`Building Name`,`Point of Contact`,Zipcode,Type) VALUES('"+str(data['Address'])+"','"+str(data['Building'])+"','"+str(data['Contact'])+"','"+str(data['Zipcode'])+"','"+str(data['Type'])+"')")
+        conn.commit()
+        return jsonify(data)
+
 @app.route('/api/v1/locations/restaurants/all', methods=['GET'])
 def api_all_restaurants():
     conn = sqlite3.connect('datav2.db')
